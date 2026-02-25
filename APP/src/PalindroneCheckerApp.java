@@ -26,4 +26,4 @@ public class PalindroneCheckerApp {
 
         return cleaned.equals(reversed);
     }
-}
+} //test
