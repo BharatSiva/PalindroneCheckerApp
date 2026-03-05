@@ -4,21 +4,19 @@ public class PalindroneCheckerApp {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
         System.out.print("Input text: ");
-        String text = sc.nextLine();
+        String input = sc.nextLine();
 
-        String reverse = "";
+        String reversed = "";
 
-        for (int i = text.length() - 1; i >= 0; i--) {
-            reverse = reverse + text.charAt(i);
+        // Iterate from the last character to the first
+        for (int i = input.length() - 1; i >= 0; i--) {
+            reversed += input.charAt(i);
         }
 
-        if (text.equals(reverse)) {
-            System.out.println("Is it a Palindrome? : true");
-        } else {
-            System.out.println("Is it a Palindrome? : false");
-        }
+        boolean isPalindrome = input.equals(reversed);
+
+        System.out.println("Is it a Palindrome? : " + isPalindrome);
 
         sc.close();
     }
