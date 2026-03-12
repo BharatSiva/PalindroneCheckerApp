@@ -1,33 +1,79 @@
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class PalindroneCheckerApp {
 
-    public static boolean isPalindrome(String input) {
+    // Node class for Singly Linked List
+    static class Node {
+        char data;
+        Node next;
 
-        // Create a Deque
-        Deque<Character> deque = new LinkedList<>();
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
-        // Convert to lowercase for case-insensitive comparison
-        input = input.toLowerCase();
+    // Function to check palindrome
+    public static boolean isPalindrome(Node head) {
 
-        // Insert characters into deque
-        for (char ch : input.toCharArray()) {
-            deque.addLast(ch);
+        if (head == null || head.next == null) {
+            return true;
         }
 
-        // Compare front and rear elements
-        while (deque.size() > 1) {
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
+        Node slow = head;
+        Node fast = head;
 
-            if (front != rear) {
+        // Find the middle using fast and slow pointers
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half of the list
+        Node prev = null;
+        Node current = slow;
+        Node next;
+
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        // Compare first half and reversed second half
+        Node firstHalf = head;
+        Node secondHalf = prev;
+
+        while (secondHalf != null) {
+            if (firstHalf.data != secondHalf.data) {
                 return false;
             }
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
         }
 
         return true;
+    }
+
+    // Convert string to linked list
+    public static Node createLinkedList(String str) {
+        Node head = null;
+        Node tail = null;
+
+        for (char ch : str.toCharArray()) {
+            Node newNode = new Node(ch);
+
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+        }
+
+        return head;
     }
 
     public static void main(String[] args) {
@@ -35,9 +81,12 @@ public class PalindroneCheckerApp {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
+        String input = scanner.nextLine().toLowerCase();
 
-        if (isPalindrome(input)) {
+        // Convert string to linked list
+        Node head = createLinkedList(input);
+
+        if (isPalindrome(head)) {
             System.out.println("The string is a Palindrome.");
         } else {
             System.out.println("The string is NOT a Palindrome.");
