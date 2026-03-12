@@ -1,24 +1,28 @@
-import java.util.*;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 public class PalindroneCheckerApp {
 
-    public static boolean isPalindrome(String str) {
-        Stack<Character> stack = new Stack<>();
-        Queue<Character> queue = new LinkedList<>();
+    public static boolean isPalindrome(String input) {
 
-        // Convert string to lowercase for uniform comparison
-        str = str.toLowerCase();
+        // Create a Deque
+        Deque<Character> deque = new LinkedList<>();
 
-        // Push and enqueue characters
-        for (int i = 0; i < str.length(); i++) {
-            char ch = str.charAt(i);
-            stack.push(ch);
-            queue.add(ch);
+        // Convert to lowercase for case-insensitive comparison
+        input = input.toLowerCase();
+
+        // Insert characters into deque
+        for (char ch : input.toCharArray()) {
+            deque.addLast(ch);
         }
 
-        // Compare stack and queue elements
-        while (!stack.isEmpty()) {
-            if (stack.pop() != queue.remove()) {
+        // Compare front and rear elements
+        while (deque.size() > 1) {
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
+
+            if (front != rear) {
                 return false;
             }
         }
@@ -27,6 +31,7 @@ public class PalindroneCheckerApp {
     }
 
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter a string: ");
