@@ -1,23 +1,35 @@
 import java.util.Scanner;
 
-public class PalindromeChecker {
+// PalindromeChecker class encapsulating palindrome logic
+class PalindromeChecker {
 
-    // Recursive method to check palindrome
-    public static boolean isPalindrome(String str, int start, int end) {
+    // Method to check palindrome
+    public boolean checkPalindrome(String input) {
 
-        // Base condition: if pointers cross or are equal
-        if (start >= end) {
-            return true;
+        // Preprocess the string
+        input = input.replaceAll("\\s+", "").toLowerCase();
+
+        // Convert string to character array
+        char[] arr = input.toCharArray();
+
+        int start = 0;
+        int end = arr.length - 1;
+
+        // Compare characters from start and end
+        while (start < end) {
+            if (arr[start] != arr[end]) {
+                return false;
+            }
+            start++;
+            end--;
         }
 
-        // If characters at start and end are not equal
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call with next indices
-        return isPalindrome(str, start + 1, end - 1);
+        return true;
     }
+}
+
+// Main class
+public class PalindroneCheckerApp {
 
     public static void main(String[] args) {
 
@@ -26,11 +38,11 @@ public class PalindromeChecker {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // Convert to lowercase and remove spaces (optional improvement)
-        String processed = input.replaceAll("\\s+", "").toLowerCase();
+        // Create object of PalindromeChecker
+        PalindromeChecker checker = new PalindromeChecker();
 
-        // Call recursive function
-        boolean result = isPalindrome(processed, 0, processed.length() - 1);
+        // Call method
+        boolean result = checker.checkPalindrome(input);
 
         if (result) {
             System.out.println("The given string is a Palindrome.");
